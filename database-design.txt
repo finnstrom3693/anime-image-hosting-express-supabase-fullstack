@@ -1,0 +1,20 @@
+create table if not exists users (
+    id uuid primary key default uuid_generate_v4(),
+    username text not null,
+    email text unique not null,
+    password_hash text not null
+);
+
+CREATE TABLE images (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) DEFAULT 'Untitled',
+    description TEXT,
+    tags TEXT,
+    orientation VARCHAR(50) CHECK (orientation IN ('landscape', 'portrait', 'square', 'unknown')),
+    filename VARCHAR(255) NOT NULL,
+    url TEXT NOT NULL,
+    user_id UUID NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
